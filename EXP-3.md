@@ -49,8 +49,35 @@ Key Features of DIT-FFT :
 7)Stop the program
 
 # MATLAB CODE:
+% DIT - RADIX-2 FAST FOURIER TRANSFORM
 
+clc;
+clear;
+close all;
+
+% Input discrete-time signal (N = 8, power of 2)
+x = [1 2 3 4 4 3 2 1];
+N = length(x);
+
+% Compute FFT (Radix-2 DIT)
+X = fft(x);
+
+% Display FFT values
+disp('DIT-FFT Output:');
+disp(X);
+
+% Frequency index
+k = 0:N-1;
+
+% Plot magnitude spectrum
+figure;
+stem(k, abs(X), 'filled');
+xlabel('Frequency index k');
+ylabel('|X(k)|');
+title('Magnitude Spectrum using Radix-2 DIT FFT');
+grid on;
 # OUTPUT GRAPH :
+<img width="840" height="562" alt="image" src="https://github.com/user-attachments/assets/c73a34ce-6258-40e1-b17c-36f21be0bae3" />
 
 # RESULT:
 Thus, the Fast Fourier Transform of the given discrete-time signal was successfully computed using the Radix-2 Decimation-in-Time (DIT) FFT algorithm in MATLAB.
