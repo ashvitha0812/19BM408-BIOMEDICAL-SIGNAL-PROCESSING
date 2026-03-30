@@ -67,8 +67,52 @@ Plot magnitude and phase response.
 7)Verify that the designed filter meets the given constraints.
 
 # MATLAB CODE :
+clc;
+clear;
+close all;
 
+T = 1;   % Sampling period
+
+wp = 0.2*pi;    % Passband frequency
+ws = 0.32*pi;   % Stopband frequency
+
+Ap = -20*log10(0.8);   % Passband ripple in dB
+As = -20*log10(0.2);   % Stopband attenuation in dB
+
+% Pre-warping
+Wp = (2/T)*tan(wp/2);
+Ws = (2/T)*tan(ws/2);
+
+% Order and cutoff frequency
+[N, Wn] = cheb1ord(Wp, Ws, Ap, As, 's');
+
+% Analog Chebyshev filter
+[b, a] = cheby1(N, Ap, Wn, 's');
+
+% Bilinear transformation
+[bd, ad] = bilinear(b, a, 1/T);
+
+% Frequency response
+[H, w] = freqz(bd, ad, 1024);
+
+% Plot magnitude response
+figure;
+plot(w/pi, abs(H));
+grid on;
+xlabel('Normalized Frequency (\times\pi rad/sample)');
+ylabel('Magnitude |H(w)|');
+title('Magnitude Response of Digital Chebyshev LPF');
+
+% Plot phase response
+figure;
+plot(w/pi, angle(H));
+grid on;
+xlabel('Normalized Frequency (\times\pi rad/sample)');
+ylabel('Phase (radians)');
+title('Phase Response of Digital Chebyshev LPF');
 # OUTPUT GRAPH :
+<img width="844" height="564" alt="image" src="https://github.com/user-attachments/assets/5a5b680d-0fc7-4597-9dee-f56183c640f7" />
+<img width="835" height="559" alt="image" src="https://github.com/user-attachments/assets/dc9a6268-8862-43e2-87aa-e575b42145a6" />
 
 # RESULT:
 A digital Chebyshev low pass filter satisfying the given specifications was successfully designed using the bilinear transformation method and its frequency response was verified using MATLAB.
