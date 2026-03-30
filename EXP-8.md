@@ -30,8 +30,25 @@ Where hd(n) is ideal impulse response.
 5.	Plot magnitude & phase
 
 # MATLAB CODE :
+clc;
+clear;
+close all;
 
+N = 20;
+wc = 0.4*pi;
+n = 0:N;
+alpha = N/2;
+
+hd = sin(wc*(n-alpha))./(pi*(n-alpha));
+hd(alpha+1) = wc/pi;
+
+w = hamming(N+1)';
+h = hd.*w;
+
+freqz(h,1);
+title('FIR using Hamming Window');
 # OUTPUT GRAPH :
+<img width="848" height="564" alt="image" src="https://github.com/user-attachments/assets/b6b8b70a-86a5-48de-a55b-e1d01e87332d" />
 
 # RESULT :
 The FIR filter was designed using Hamming window .
